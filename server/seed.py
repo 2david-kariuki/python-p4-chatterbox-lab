@@ -1,34 +1,23 @@
-from random import choice as rc
+from app import app, db
+from models import Message
+from datetime import datetime
 
-from faker import Faker
-
-from app import app
-from models import db, Message 
-from models import db, Message
-
-fake = Faker()
-
-usernames = [fake.first_name() for i in range(4)]
-if "Duane" not in usernames:
-    usernames.append("Duane")
-
-def make_messages():
-
-    Message.query.delete() 
-    Message.query.delete()
-
-    messages = []
-
-    for i in range(20):
-        message = Message(
-            content=fake.sentence(), 
-            content=fake.sentence(),
-            username=rc(usernames),
+with app.app_context():
+    db.session.query(Message).delete()
+    messages = [
+        Message(
+            body='Hello, World!',
+            username='Alice',
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
+        ),
+        Message(
+            body='How are you?',
+            username='Bob',
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
         )
-        messages.append(message)
-
+    ]
     db.session.add_all(messages)
-    db.session.commit()         
-
-if __name__ == '__main__':
-     app.app_context(): # type: ignore
+    db.session.commit()
+    print('Database seeded with sample messages!')

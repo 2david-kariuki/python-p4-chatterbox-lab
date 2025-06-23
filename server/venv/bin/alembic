@@ -1,4 +1,4 @@
-#!/home/david/python-p4-chatterbox-lab/server/venv/bin/python3.8
+#!/home/david/python-p4-chatterbox-lab/server/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
